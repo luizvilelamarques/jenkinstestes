@@ -1,0 +1,47 @@
+{
+	"build": {
+		"tipoProjetoMaven" : true,
+		"tipoProjetoNode"  : false,
+		"package": "Implementacao/App/pom.xml",
+		"dockerImages": {
+			"imageBranch" : "registry.intra.tjmg.gov.br/medida-protetiva/medida-protetiva-srv:${params.BRANCH}",
+			"imgLatest"   : "registry.intra.tjmg.gov.br/medida-protetiva/medida-protetiva-srv:latest"
+		}
+	},
+	"codeAnalise": {
+		"sonar": {
+			"projectKey": "protetiva:medida-protetiva-srv",
+			"sources":    "./Implementacao/App/src"
+		}
+	},
+	"git" :{
+		"credentials": "da95ae75-c05c-4628-ae67-c570d6e588c6",
+		"url": 		   "http://gitlab.intra.tjmg.gov.br/apoio-judicial/medida-protetiva-srv"
+	},
+	"docker": {
+		"server": {
+			"url":      "tcp://lindocker-2.intra.tjmg.gov.br:2375",
+			"registry" : {
+				"url": "https://registry.intra.tjmg.gov.br",
+				"secret": "codap-registry"
+			}
+		}
+	},
+	"okd": {
+		"clusterName": "OKD Homologação",
+		"service": {
+			"name": "medida-protetiva",
+			"port": 8080,
+			"portTarget": 8080
+		},
+		"route": {
+			"url": "medida-protetiva-hml.tjmg.jus.br"
+		},
+		"deploymentConfig": {
+			"imagem": "registry.intra.tjmg.gov.br/medida-protetiva/medida-protetiva-srv:latest",
+			"replicas": 1,
+			"rolout" : true,
+			"applyYaml": false
+		}
+	}
+}
