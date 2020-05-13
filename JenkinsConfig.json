@@ -1,4 +1,4 @@
-{
+
 	"build": {
 		"tipoProjetoMaven" : true,
 		"tipoProjetoNode"  : false,
@@ -44,4 +44,4 @@
 			"applyYaml": false
 		}
 	}
-}
+
