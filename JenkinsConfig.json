@@ -4,7 +4,7 @@
 		"tipoProjetoNode"  : false,
 		"package": "Implementacao/App/pom.xml",
 		"dockerImages": {
-			"imageBranch" : "registry.intra.tjmg.gov.br/medida-protetiva/medida-protetiva-srv:$\{params.BRANCH\}",
+			"imageBranch" : "registry.intra.tjmg.gov.br/medida-protetiva/medida-protetiva-srv:params.BRANCH",
 			"imgLatest"   : "registry.intra.tjmg.gov.br/medida-protetiva/medida-protetiva-srv:latest"
 		}
 	},
