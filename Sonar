@@ -4,7 +4,7 @@ class Sonar {
     def projectKey
     def sources
     
-    def analise(filepom, sonarInfo){
+    def analise(){
         scannerHome = tool 'Sonar TJMG'
         POM_VERSION = _version()
 
