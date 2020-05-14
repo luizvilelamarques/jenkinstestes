@@ -1,18 +1,28 @@
-def Test(buildInfo){
-    if (buildInfo.tipoProjetoMaven){
-         TestMaven(buildInfo.package)
-    }else if (buildInfo.tipoProjetoNode){ 
-         TestNode(buildInfo.package)
+class Test {
+    def isMavem
+    def isNode
+    def package
+     
+    def test(buildInfo){
+        if (isMavem){
+             _testMaven()
+        }else if (isNode){ 
+             _testNode()
+        }
     }
+
+    def _testMaven(){
+         sh " echo test maven"
+    }
+
+    def _testNode(){
+         sh " echo test nodejs"
+    }
+    
 }
 
-
-def TestMaven(filepom){
-     sh " echo test maven"
-}
-
-def TestNode(packagejson){
-     sh " echo test nodejs"
+def instancia(buildInfo){
+     return new Test(isMavem: buildInfo.tipoProjetoMaven, isNode: buildInfo.tipoProjetoNode, package: buildInfo.package)
 }
 
 return this
