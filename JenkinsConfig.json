@@ -3,10 +3,7 @@
 		"tipoProjetoMaven" : true,
 		"tipoProjetoNode"  : false,
 		"package": "Implementacao/App/pom.xml",
-		"dockerImages": {
-			"imageBranch" : "registry.intra.tjmg.gov.br/medida-protetiva/medida-protetiva-srv:params.BRANCH",
-			"imgLatest"   : "registry.intra.tjmg.gov.br/medida-protetiva/medida-protetiva-srv:latest"
-		}
+		"dockerImage": "medida-protetiva/medida-protetiva-srv"
 	},
 	"codeAnalise": {
 		"sonar": {
@@ -16,11 +13,11 @@
 	},
 	"git" :{
 		"credentials": "da95ae75-c05c-4628-ae67-c570d6e588c6",
-		"url": 		   "http://gitlab.intra.tjmg.gov.br/apoio-judicial/medida-protetiva-srv"
+		"url": 		"http://gitlab.intra.tjmg.gov.br/apoio-judicial/medida-protetiva-srv"
 	},
 	"docker": {
 		"server": {
-			"url":      "tcp://lindocker-2.intra.tjmg.gov.br:2375",
+			"url": "tcp://lindocker-2.intra.tjmg.gov.br:2375",
 			"registry" : {
 				"url": "https://registry.intra.tjmg.gov.br",
 				"secret": "codap-registry"
