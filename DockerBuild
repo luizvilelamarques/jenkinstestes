@@ -8,13 +8,13 @@ class Docker {
 	def isLatest
 	def branch
 	
-	def DockerBuild(){
+	def build(){
 	    docker.withServer(server, '') {
-		app = docker.build(imagemDocker())
+		app = docker.build(_imagemDocker())
 	    }
 	}
 
-	def DockerPush(){
+	def push(){
 	    docker.withServer(server,'') {
 		docker.withRegistry(registry, secret) {
 		    app.push()
@@ -22,7 +22,7 @@ class Docker {
 	     }
 	}
 
-	def imagemDocker(){
+	def _imagemDocker(){
 	    if (isLatest){
 		return "registry.intra.tjmg.gov.br/${image}:latest"
 	    }
