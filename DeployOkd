@@ -49,8 +49,7 @@ def instancia(deployInfo){
                              deploymentConfig: deployInfo.service.name + '-srv')
     }else{
         return new OkdRolout(clusterName: deployInfo.clusterName, 
-                             serviceName: deployInfo.service.name, 
-                             deploymentConfig: deployInfo.service.name + '-srv')
+                             serviceName: deployInfo.service.name)
     }
 }
 
