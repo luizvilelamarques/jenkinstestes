@@ -7,7 +7,7 @@ class TestMaven {
 }
 
 class TestNodeJS {
-     def package
+     def pacote
      
      def test(){
            sh " echo test nodejs"
