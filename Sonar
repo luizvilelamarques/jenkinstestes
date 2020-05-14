@@ -1,10 +1,25 @@
-def Sonnar(filepom, sonarInfo){
-    scannerHome = tool 'Sonar TJMG'
-    POM_VERSION = sh script: "mvn -f ${filepom} help:evaluate -Dexpression=project.version -q -DforceStdout", returnStdout: true
+class Sonar {
+    
+    def pom
+    def projectKey
+    def sources
+    
+    def analise(filepom, sonarInfo){
+        scannerHome = tool 'Sonar TJMG'
+        POM_VERSION = _version()
 
-    withSonarQubeEnv('SonarQube TJMG'){ 
-        sh "${scannerHome}/bin/sonar-scanner -e -Dsonar.projectKey=${sonarInfo.projectKey} -Dsonar.projectVersion=${POM_VERSION} -Dsonar.java.source=1.8 -Dsonar.sources=${sonarInfo.sources} -Dsonar.java.binaries=**/target -Dsonar.sourceEncoding=ISO-8859-1"
+        withSonarQubeEnv('SonarQube TJMG'){ 
+            sh "${scannerHome}/bin/sonar-scanner -e -Dsonar.projectKey=${projectKey} -Dsonar.projectVersion=${POM_VERSION} -Dsonar.java.source=1.8 -Dsonar.sources=${sources} -Dsonar.java.binaries=**/target -Dsonar.sourceEncoding=ISO-8859-1"
+        }
     }
+    
+    def _version(){
+        return sh script: "mvn -f ${pom} help:evaluate -Dexpression=project.version -q -DforceStdout", returnStdout: true
+    }
+}
+
+def instancia(pom, sonarInfo){
+    return new Sonar(pom: pom, projectKey: sonarInfo.projectKey, sources: sonarInfo.sources)
 }
 
 return this
