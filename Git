@@ -4,8 +4,7 @@ class Git {
     def branch
     
     def checkout() {
-        "sh echo luiz".execute()
-        //gitee branch: branch, credentialsId: credentials, url: url
+        git branch: branch, credentialsId: credentials, url: url
     }
 }
 
