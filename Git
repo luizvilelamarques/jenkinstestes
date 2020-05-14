@@ -13,3 +13,5 @@ def instancia(gitInfo, branch){
 def checkout() {
    git branch: branch, credentialsId: credentials, url: url
 }
+
+return this
