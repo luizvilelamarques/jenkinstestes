@@ -1,17 +1,28 @@
-def Build(buildInfo){
-     if (buildInfo.tipoProjetoMaven){
-         BuildMaven(buildInfo.package)
-     }else if (buildInfo.tipoProjetoNode){ 
-         BuildNode(buildInfo.package)
+class Build {
+     
+     def isMavem
+     def isNode
+     def package
+     
+     def Build(buildInfo){
+          if (buildInfo.tipoProjetoMaven){
+              _buildMaven(buildInfo.package)
+          }else if (buildInfo.tipoProjetoNode){ 
+              _buildNode(buildInfo.package)
+          }
+     }
+
+     def _buildNode(packagejson) {
+          sh " npm run build -f ${packagejson}"
+     }
+
+     def _buildMaven(filepom) {
+          sh " mvn clean install -f ${filepom}"
      }
 }
 
-def BuildNode(packagejson) {
-     sh " npm run build -f ${packagejson}"
-}
-
-def BuildMaven(filepom) {
-     sh " mvn clean install -f ${filepom}"
+def instancia(buildInfo){
+     return new Build(isMavem: buildInfo.tipoProjetoMaven, isNode: buildInfo.tipoProjetoNode, package: buildInfo.package)
 }
 
 return this
