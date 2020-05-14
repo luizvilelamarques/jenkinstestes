@@ -6,7 +6,7 @@ def rolout
 def instancia(deployInfo){
     clusterName = deployInfo.clusterName
     serviceName = deployInfo.service.name
-    rolout      = deployInfo.rolout 
+    rolout      = deployInfo.deploymentConfig.rolout 
     deploymentConfig = deployInfo.service.name + '-srv'
     return this
 }
