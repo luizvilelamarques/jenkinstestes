@@ -5,9 +5,9 @@ class ParseJson{
    def urlTxt
    
    @NonCPS
-   def parseJson(){
-      println 'vou ler arquivo'
-      return new JsonSlurperClassic().parse('https://raw.githubusercontent.com/luizvilelamarques/jenkinstestes/master/JenkinsConfig.json'.toURL())
+   def parse(){
+      println '[DEBUG] Lendo arquivo json'
+      return new JsonSlurperClassic().parse(urlTxt.toURL())
    }
 }
 
