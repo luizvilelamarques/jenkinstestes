@@ -1,8 +1,8 @@
 class BuildMaven {
-     def package
+     def pacote
      
      def build(){
-           sh " mvn clean install -f ${package}"
+           sh " mvn clean install -f ${pacote}"
      }
 }
 
@@ -10,15 +10,15 @@ class BuildNodeJS {
      def package
      
      def build(){
-           sh " npm run build -f ${package}"
+           sh " npm run build -f ${pacote}"
      }
 }
 
 def instancia(buildInfo){
      if (buildInfo.tipoProjetoMaven){
-         return new BuildMaven(package: buildInfo.package)
+         return new BuildMaven(pacote: buildInfo.package)
      }else if (isNode){ 
-         return new BuildNodeJS(package: buildInfo.package)
+         return new BuildNodeJS(pacote: buildInfo.package)
      }
 }
 
