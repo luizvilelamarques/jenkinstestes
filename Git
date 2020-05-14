@@ -1,5 +1,15 @@
-def Checkout(gitInfo, branch) {
-    git branch: branch, credentialsId: gitInfo.credentials, url: gitInfo.url
+class Git {
+    def credentials
+    def url
+    def branch
+    
+    def checkout() {
+        git branch: branch, credentialsId: credentials, url: url
+    }
+}
+
+def instancia(gitInfo, branch){
+  return new Git(credentials: gitInfo.credentials, url: gitInfo.url, branch: branch)
 }
 
 return this
