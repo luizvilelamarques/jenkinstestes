@@ -1,13 +1,17 @@
 
 class Teste {
-  def _variavel = 0
+  def variavel = 0
 
   public void example1() {
-    _variavel = _variavel + 1
+    variavel = variavel + 1
   }
 
-  public String example2() {
-   return _variavel
+  public Integer example2() {
+   return variavel
+  }
+  
+  public String example3() {
+   return "olá"
   }
 }
 
