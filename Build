@@ -5,19 +5,19 @@ class Build {
      def package
      
      def build(buildInfo){
-          if (buildInfo.tipoProjetoMaven){
-              _buildMaven(buildInfo.package)
-          }else if (buildInfo.tipoProjetoNode){ 
-              _buildNode(buildInfo.package)
+          if (isMavem){
+              _buildMaven()
+          }else if (isNode){ 
+              _buildNode()
           }
      }
 
      def _buildNode(packagejson) {
-          sh " npm run build -f ${packagejson}"
+          sh " npm run build -f ${package}"
      }
 
      def _buildMaven(filepom) {
-          sh " mvn clean install -f ${filepom}"
+          sh " mvn clean install -f ${package}"
      }
 }
 
