@@ -1,42 +1,40 @@
-class Docker {
+def app
+def server
+def image
+def registry
+def secret
+def isLatest
+def branch
 
-	def app
-	def server
-	def image
-	def registry
-	def secret
-	def isLatest
-	def branch
-	
-	def build(){
-	    docker.withServer(server, '') {
-		app = docker.build(_imagemDocker())
-	    }
-	}
-
-	def push(){
-	    docker.withServer(server,'') {
-		docker.withRegistry(registry, secret) {
-		    app.push()
-		}
-	     }
-	}
-
-	def _imagemDocker(){
-	    if (isLatest){
-		return "registry.intra.tjmg.gov.br/${image}:latest"
-	    }
-	    return "registry.intra.tjmg.gov.br/${image}:${branch}"
-	} 
+def build(){
+    docker.withServer(server, '') {
+	app = docker.build(_imagemDocker())
+    }
 }
 
+def push(){
+    docker.withServer(server,'') {
+	docker.withRegistry(registry, secret) {
+	    app.push()
+	}
+     }
+}
+
+def _imagemDocker(){
+    if (isLatest){
+	return "registry.intra.tjmg.gov.br/${image}:latest"
+    }
+    return "registry.intra.tjmg.gov.br/${image}:${branch}"
+} 
+	
 def instancia(dockerInfo, image, latest, branch){
-   return new Docker(server: dockerInfo.server.url, 
-   			image: img, 
-			registry: dockerInfo.server.registry.url, 
-			secret: dockerInfo.server.registry.secret, 
-			isLatest: latest,
-			branch: branch)
+   server= dockerInfo.server.url
+   image = img
+   registry = dockerInfo.server.registry.url
+   secret = dockerInfo.server.registry.secret
+   isLatest = latest
+   branch = branch
+   return this			
 }
 
 return this
