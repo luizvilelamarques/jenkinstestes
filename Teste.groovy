@@ -12,3 +12,9 @@ class Teste {
     println "valor variavel ${_variavel}"
   }
 }
+
+def instanceTest(){
+   return new  Teste()
+}
+
+return this
