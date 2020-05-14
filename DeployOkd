@@ -1,55 +1,40 @@
-class OkdApply {
-
-    def clusterName
-    def serviceName
-    
-    //faz rolout simples ou cria/apply yamls para atualizar configuracoes
-    def deploy() {
-        openshift.withCluster(clusterName) {
-             openshift.withProject(serviceName) {
-                 _deploy()
-             }
-        }
-    }
-
-    //cria nova aplicação ou aplica alterações em app já existente
-    def _deploy() {
-        ApplyEnvJson()
-        def templateSelector = openshift.selector( "template", "openshift-test-template")
-        if (!templateSelector.exists()) {
-            openshift.create(readFile('template-openshift.json'))
-        } else {
-            openshift.apply(readFile('template-openshift.json'))
-        }
-    }
-}
-
-class OkdRolout{
-    def clusterName
-    def serviceName
-    def deploymentConfig
-    
-    def deploy() {
-        openshift.withCluster(clusterName) {
-             openshift.withProject(serviceName) {
-                 _rolout()
-             }
-        }
-    }
-    
-    def _rolout(){
-         openshift.selector("dc", deploymentConfig).rollout().latest()    
-    }
-}
+def clusterName
+def serviceName
+def deploymentConfig
 
 def instancia(deployInfo){
+    clusterName = deployInfo.clusterName
+    serviceName = deployInfo.service.name
+    deploymentConfig = deployInfo.service.name + '-srv'
+    return this
+}
+
+def deploy() {
     if (deployInfo.deploymentConfig.rolout){
-        return new OkdRolout(clusterName: deployInfo.clusterName, 
-                             serviceName: deployInfo.service.name, 
-                             deploymentConfig: deployInfo.service.name + '-srv')
+        _rolout()
     }else{
-        return new OkdRolout(clusterName: deployInfo.clusterName, 
-                             serviceName: deployInfo.service.name)
+        _apply()
+    }
+}
+
+def _apply() {
+    openshift.withCluster(clusterName) {
+         openshift.withProject(serviceName) {
+            def templateSelector = openshift.selector( "template", "openshift-test-template")
+            if (!templateSelector.exists()) {
+                openshift.create(readFile('template-openshift.json'))
+            } else {
+                openshift.apply(readFile('template-openshift.json'))
+            }
+         }
+    }
+}
+
+def _rolout() {
+    openshift.withCluster(clusterName) {
+         openshift.withProject(serviceName) {
+            openshift.selector("dc", deploymentConfig).rollout().latest()    
+         }
     }
 }
 
