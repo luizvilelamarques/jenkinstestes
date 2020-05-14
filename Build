@@ -10,7 +10,7 @@ def instancia(buildInfo){
 }
 
 def build(){
-     if (buildInfo.tipoProjetoMaven){
+     if (isMaven){
          sh " mvn clean install -f ${pacote}"
      }else if (isNode){ 
           sh " npm run build -f ${pacote}"
