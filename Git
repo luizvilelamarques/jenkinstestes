@@ -1,16 +1,15 @@
-class Git {
-    def credentials
-    def url
-    def branch
+def credentials
+def url
+def branch
     
-    @NonCPS
-    def checkout() {
-        git branch: branch, credentialsId: credentials, url: url
-    }
-}
-
+    
 def instancia(gitInfo, branch){
-  return new Git(credentials: gitInfo.credentials, url: gitInfo.url, branch: branch)
+  credentials= gitInfo.credentials
+  url        = gitInfo.url
+  branch     = branch
+  return this
 }
 
-return this
+def checkout() {
+   git branch: branch, credentialsId: credentials, url: url
+}
