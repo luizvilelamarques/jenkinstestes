@@ -15,7 +15,8 @@ class Teste {
   }
   
   def example4() {
-   "sh echo luizzzz".execute().in.text
+   def proc "sh echo luizzzz".execute()
+    return proc.in.text
   }
 }
 
