@@ -3,7 +3,6 @@ class Git {
     def url
     def branch
     
-    @NonCPS
     def checkout() {
         git branch: branch, credentialsId: credentials, url: url
     }
