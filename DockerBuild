@@ -1,0 +1,23 @@
+def DockerBuild(server, image){
+    docker.withServer(server, '') {
+        app = docker.build(image)
+    }
+	return app
+}
+
+def DockerPush(server, registry, secret, app){
+    docker.withServer(server,'') {
+        docker.withRegistry(registry, secret) {
+            app.push()
+        }
+     }
+}
+
+def imagemDocker(img, latest){
+    if (latest){
+        return "registry.intra.tjmg.gov.br/${img}:latest"
+    }
+    return "registry.intra.tjmg.gov.br/${img}:${params.BRANCH}"
+} 
+
+return this
