@@ -27,9 +27,9 @@ def _imagemDocker(){
     return "registry.intra.tjmg.gov.br/${image}:${branch}"
 } 
 	
-def instancia(dockerInfo, image, latest, branch){
+def instancia(dockerInfo, img, latest, branch){
    server= dockerInfo.server.url
-   image = image
+   image = img
    registry = dockerInfo.server.registry.url
    secret = dockerInfo.server.registry.secret
    isLatest = latest
