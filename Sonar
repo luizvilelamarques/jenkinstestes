@@ -18,8 +18,8 @@ class Sonar {
     }
 }
 
-def instancia(pom, sonarInfo){
-    return new Sonar(pom: pom, projectKey: sonarInfo.projectKey, sources: sonarInfo.sources)
+def instancia(buildInfo, sonarInfo){
+    return new Sonar(pom: buildInfo.package, projectKey: sonarInfo.projectKey, sources: sonarInfo.sources)
 }
 
 return this
