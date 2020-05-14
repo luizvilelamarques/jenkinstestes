@@ -7,7 +7,7 @@ class BuildMaven {
 }
 
 class BuildNodeJS {
-     def package
+     def pacote
      
      def build(){
            sh " npm run build -f ${pacote}"
