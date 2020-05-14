@@ -1,24 +1,19 @@
-class BuildMaven {
-     def pacote
-     
-     def build(){
-           sh " mvn clean install -f ${pacote}"
-     }
-}
-
-class BuildNodeJS {
-     def pacote
-     
-     def build(){
-           sh " npm run build -f ${pacote}"
-     }
-}
+def pacote
+def isMaven
+def isNode
 
 def instancia(buildInfo){
+     isMaven= buildInfo.tipoProjetoMaven
+     isNode = buildInfo.tipoProjetoNode
+     pacote = buildInfo.package
+     return this
+}
+
+def build(){
      if (buildInfo.tipoProjetoMaven){
-         return new BuildMaven(pacote: buildInfo.package)
+         sh " mvn clean install -f ${pacote}"
      }else if (isNode){ 
-         return new BuildNodeJS(pacote: buildInfo.package)
+          sh " npm run build -f ${pacote}"
      }
 }
 
