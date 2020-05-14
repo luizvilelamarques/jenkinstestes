@@ -1,9 +1,18 @@
 import groovy.json.*
 
-@NonCPS
-def parseJson(){
-   println 'vou ler arquivo'
-   return new JsonSlurperClassic().parse('https://raw.githubusercontent.com/luizvilelamarques/jenkinstestes/master/JenkinsConfig.json'.toURL())
+class ParseJson{
+   
+   def urlTxt
+   
+   @NonCPS
+   def parseJson(){
+      println 'vou ler arquivo'
+      return new JsonSlurperClassic().parse('https://raw.githubusercontent.com/luizvilelamarques/jenkinstestes/master/JenkinsConfig.json'.toURL())
+   }
+}
+
+def instancia(url){
+   return new ParseJson(urlTxt: url)
 }
 
 return this
