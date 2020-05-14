@@ -1,16 +1,18 @@
 def clusterName
 def serviceName
 def deploymentConfig
+def rolout
 
 def instancia(deployInfo){
     clusterName = deployInfo.clusterName
     serviceName = deployInfo.service.name
+    rolout      = deployInfo.rolout 
     deploymentConfig = deployInfo.service.name + '-srv'
     return this
 }
 
 def deploy() {
-    if (deployInfo.deploymentConfig.rolout){
+    if (rolout){
         _rolout()
     }else{
         _apply()
