@@ -1,0 +1,11 @@
+//popula o json com valores do ambiente
+def ApplyEnvJson(){
+    configFileProvider([configFile(fileId: 'json-envsubst', replaceTokens: false, targetLocation: "template-openshift.json")]) {
+         sh """cat template-openshift.json
+         SITE_NAME=my-db-master DATABASE_NAME=my_db_master DATABASE_USER=my_db envsubst < template-openshift.json > template-openshift.json
+         cat template-openshift.json
+         """
+      }
+}
+
+return this
