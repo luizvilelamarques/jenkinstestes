@@ -1,29 +1,56 @@
-//faz rolout simples ou cria/apply yamls para atualizar configuracoes
-def DeployOpenshift(deployInfo) {
-    openshift.withCluster(deployInfo.clusterName) {
-         openshift.withProject(deployInfo.service.name) {
-             if (deployInfo.deploymentConfig.rolout){
-                 RoloutSimplesOkd(deployInfo.service.name + '-srv')
-             }else{
-                 //apply yml
+class OkdApply {
+
+    def clusterName
+    def serviceName
+    
+    //faz rolout simples ou cria/apply yamls para atualizar configuracoes
+    def deploy() {
+        openshift.withCluster(clusterName) {
+             openshift.withProject(serviceName) {
+                 _deploy()
              }
-         }
+        }
+    }
+
+    //cria nova aplicação ou aplica alterações em app já existente
+    def _deploy() {
+        ApplyEnvJson()
+        def templateSelector = openshift.selector( "template", "openshift-test-template")
+        if (!templateSelector.exists()) {
+            openshift.create(readFile('template-openshift.json'))
+        } else {
+            openshift.apply(readFile('template-openshift.json'))
+        }
     }
 }
 
-//faz rolout simples
-def RoloutSimplesOkd(deploymentConfig){
-     openshift.selector("dc", deploymentConfig).rollout().latest()    
+class OkdRolout{
+    def clusterName
+    def serviceName
+    def deploymentConfig
+    
+    def deploy() {
+        openshift.withCluster(clusterName) {
+             openshift.withProject(serviceName) {
+                 _rolout()
+             }
+        }
+    }
+    
+    def _rolout(){
+         openshift.selector("dc", deploymentConfig).rollout().latest()    
+    }
 }
 
-//cria nova aplicação ou aplica alterações em app já existente
-def ApplyYamlOkd() {
-    ApplyEnvJson()
-    def templateSelector = openshift.selector( "template", "openshift-test-template")
-    if (!templateSelector.exists()) {
-        openshift.create(readFile('template-openshift.json'))
-    } else {
-    	openshift.apply(readFile('template-openshift.json'))
+def instancia(deployInfo){
+    if (deployInfo.deploymentConfig.rolout){
+        return new OkdRolout(clusterName: deployInfo.clusterName, 
+                             serviceName: deployInfo.service.name, 
+                             deploymentConfig: deployInfo.service.name + '-srv')
+    }else{
+        return new OkdRolout(clusterName: deployInfo.clusterName, 
+                             serviceName: deployInfo.service.name, 
+                             deploymentConfig: deployInfo.service.name + '-srv')
     }
 }
 
