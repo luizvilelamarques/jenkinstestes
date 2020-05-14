@@ -1,23 +1,16 @@
-class Git {
-    def credentials
-    def url
-    def branch
-    
-    def checkout() {
-        git branch: branch, credentialsId: credentials, url: url
-    }
-}
-
-
-def ref    
+def credentials
+def url
+def branch
     
 def instancia(gitInfo, branch){
-  ref = new Git(credentials: gitInfo.credentials, url: gitInfo.url, branch: branch)
+  credentials= gitInfo.credentials
+  url= gitInfo.url
+  branch= branch
   return this
 }
 
 def checkout() {
-   ref.checkout()
+   git branch: branch, credentialsId: credentials, url: url
 }
 
 return this
