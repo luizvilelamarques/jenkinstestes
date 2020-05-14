@@ -1,15 +1,15 @@
 
 {
-  def variavel = 0
+  def _variavel = 0
 
   def example1() {
     println 'Hello from example1'
-    variavel = variavel + 1
+    _variavel = _variavel + 1
   }
 
   def example2() {
     println 'Hello from example2'
-    println "valor variavel ${variavel}"
+    println "valor variavel ${_variavel}"
   }
 }
 return this
