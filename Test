@@ -1,24 +1,19 @@
-class TestMaven {
-     def pacote
-     
-     def test(){
-           sh " echo test maven"
-     }
-}
-
-class TestNodeJS {
-     def pacote
-     
-     def test(){
-           sh " echo test nodejs"
-     }
-}
+def pacote
+def isMaven
+def isNode
 
 def instancia(buildInfo){
-     if (buildInfo.tipoProjetoMaven){
-         return new TestMaven(pacote: buildInfo.package)
+     isMaven= buildInfo.tipoProjetoMaven
+     isNode = buildInfo.tipoProjetoNode
+     pacote = buildInfo.package
+     return this
+}
+
+def test(){
+     if (isMaven){
+          sh " echo test maven"
      }else if (isNode){ 
-         return new TestNodeJS(pacote: buildInfo.package)
+          sh " echo test nodejs"
      }
 }
 
