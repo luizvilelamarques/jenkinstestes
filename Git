@@ -1,0 +1,5 @@
+def Checkout(gitInfo, branch) {
+    git branch: branch, credentialsId: gitInfo.credentials, url: gitInfo.url
+}
+
+return this
