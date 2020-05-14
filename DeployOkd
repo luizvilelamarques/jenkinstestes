@@ -1,0 +1,30 @@
+//faz rolout simples ou cria/apply yamls para atualizar configuracoes
+def DeployOpenshift(deployInfo) {
+    openshift.withCluster(deployInfo.clusterName) {
+         openshift.withProject(deployInfo.service.name) {
+             if (deployInfo.deploymentConfig.rolout){
+                 RoloutSimplesOkd(deployInfo.service.name + '-srv')
+             }else{
+                 //apply yml
+             }
+         }
+    }
+}
+
+//faz rolout simples
+def RoloutSimplesOkd(deploymentConfig){
+     openshift.selector("dc", deploymentConfig).rollout().latest()    
+}
+
+//cria nova aplicação ou aplica alterações em app já existente
+def ApplyYamlOkd() {
+    ApplyEnvJson()
+    def templateSelector = openshift.selector( "template", "openshift-test-template")
+    if (!templateSelector.exists()) {
+        openshift.create(readFile('template-openshift.json'))
+    } else {
+    	openshift.apply(readFile('template-openshift.json'))
+    }
+}
+
+return this
