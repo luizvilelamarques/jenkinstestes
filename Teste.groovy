@@ -13,6 +13,10 @@ class Teste {
   def example3() {
    return "olá mundo"
   }
+  
+  def example4() {
+   return "olá mundo 4"
+  }
 }
 
 def instanceTest(){
