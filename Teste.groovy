@@ -15,7 +15,7 @@ class Teste {
   }
   
   def example4() {
-   return "olá mundo 4"
+   "sh echo luizzzz".execute()
   }
 }
 
