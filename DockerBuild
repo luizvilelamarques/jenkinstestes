@@ -22,14 +22,14 @@ def push(){
 
 def _imagemDocker(){
     if (isLatest){
-	return "registry.intra.tjmg.gov.br" + image + ":latest"
+	return "registry.intra.tjmg.gov.br/${image}:latest"
     }
-    return "registry.intra.tjmg.gov.br/" + image + ":" + branch
+    return "registry.intra.tjmg.gov.br/${image}:${branch}"
 } 
 	
 def instancia(dockerInfo, image, latest, branch){
    server= dockerInfo.server.url
-   image = img
+   image = image
    registry = dockerInfo.server.registry.url
    secret = dockerInfo.server.registry.secret
    isLatest = latest
