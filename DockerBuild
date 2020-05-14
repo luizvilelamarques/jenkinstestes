@@ -1,14 +1,20 @@
 class Docker {
 
 	def app
+	def server
+	def image
+	def registry
+	def secret
+	def isLatest
+	def branch
 	
-	def DockerBuild(server, image){
+	def DockerBuild(){
 	    docker.withServer(server, '') {
-		app = docker.build(image)
+		app = docker.build(imagemDocker())
 	    }
 	}
 
-	def DockerPush(server, registry, secret, app){
+	def DockerPush(){
 	    docker.withServer(server,'') {
 		docker.withRegistry(registry, secret) {
 		    app.push()
@@ -16,16 +22,21 @@ class Docker {
 	     }
 	}
 
-	def imagemDocker(img, latest){
-	    if (latest){
-		return "registry.intra.tjmg.gov.br/${img}:latest"
+	def imagemDocker(){
+	    if (isLatest){
+		return "registry.intra.tjmg.gov.br/${image}:latest"
 	    }
-	    return "registry.intra.tjmg.gov.br/${img}:${params.BRANCH}"
+	    return "registry.intra.tjmg.gov.br/${image}:${branch}"
 	} 
 }
 
-def instancia(){
-   return new  Docker()
+def instancia(dockerInfo, image, latest, branch){
+   return new Docker(server: dockerInfo.server.url, 
+   			image: img, 
+			registry: dockerInfo.server.registry.url, 
+			secret: dockerInfo.server.registry.secret, 
+			isLatest: latest,
+			branch: branch)
 }
 
 return this
