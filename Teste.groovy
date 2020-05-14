@@ -1,5 +1,5 @@
 
-{
+class Teste {
   def _variavel = 0
 
   def example1() {
