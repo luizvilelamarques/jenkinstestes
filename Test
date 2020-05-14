@@ -1,0 +1,16 @@
+def Test(buildInfo){
+    if (buildInfo.tipoProjetoMaven){
+         TestMaven(buildInfo.package)
+    }else if (buildInfo.tipoProjetoNode){ 
+         TestNode(buildInfo.package)
+    }
+}
+
+
+def TestMaven(filepom){
+     sh " echo test maven"
+}
+
+def TestNode(packagejson){
+     sh " echo test nodejs"
+}
