@@ -1,5 +1,5 @@
 class TestMaven {
-     def package
+     def pacote
      
      def test(){
            sh " echo test maven"
@@ -16,9 +16,9 @@ class TestNodeJS {
 
 def instancia(buildInfo){
      if (buildInfo.tipoProjetoMaven){
-         return new TestMaven(package: buildInfo.package)
+         return new TestMaven(pacote: buildInfo.package)
      }else if (isNode){ 
-         return new TestNodeJS(package: buildInfo.package)
+         return new TestNodeJS(pacote: buildInfo.package)
      }
 }
 
