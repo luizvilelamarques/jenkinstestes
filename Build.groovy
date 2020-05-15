@@ -11,7 +11,7 @@ def instancia(buildInfo, groovyBase){
 
 def factory(groovyBase, scriptName){
      sh "wget ${_groovyBase}/${scriptName}"
-     return load scriptName
+     return load  scriptName
 }
 
 return this
