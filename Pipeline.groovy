@@ -29,7 +29,7 @@ def instancia(branch, _groovyBase){
      content = parseJson.parse()
 
      gitScm     = codeGit.instancia(content.git, "develop")
-     buildObj   = codeBuild.instancia(content.build)
+     buildObj   = codeBuild.instancia(content.build, _groovyBase)
      testObj    = codeTest.instancia(content.build)
      sonar      = codeSonar.instancia(content.build, content.codeAnalise.sonar)
 
