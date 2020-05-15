@@ -1,18 +1,16 @@
 import groovy.json.*
 
-class ParseJson{
+def urlTxt
    
-   def urlTxt
-   
-   @NonCPS
-   def parse(){
-      println '[DEBUG] Lendo arquivo json'
-      return new JsonSlurperClassic().parse(urlTxt.toURL())
-   }
+@NonCPS
+def parse(){
+   println '[DEBUG] Lendo arquivo json'
+   return new JsonSlurperClassic().parse(urlTxt.toURL())
 }
 
 def instancia(url){
-   return new ParseJson(urlTxt: url)
+   urlTxt = url
+   return this
 }
 
 return this
