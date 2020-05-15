@@ -7,8 +7,7 @@ def dockerBranch
 def dockerLatest
 def deployOkd
 
-def instancia(branch){
-     _groovyBase   = 'https://raw.githubusercontent.com/luizvilelamarques/jenkinstestes/master/'
+def instancia(branch, _groovyBase){
 
      sh "wget ${_groovyBase}/ParseJson"
      sh "wget ${_groovyBase}/Build"
