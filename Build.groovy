@@ -1,16 +1,16 @@
-def _build
+def buildRef
 
 def instancia(buildInfo, groovyBase){
      if (buildInfo.tipoProjeto == 'maven'){
-         _build = dynamicLoad(groovyBase + "/", "BuildMaven.groovy").instancia(buildInfo)
+         buildRef = dynamicLoad(groovyBase + "/", "BuildMaven.groovy").instancia(buildInfo)
      }else if (buildInfo.tipoProjeto == 'node'){ 
-         _build = dynamicLoad(groovyBase + "/", "BuildNode.groovy").instancia(buildInfo)
+         buildRef = dynamicLoad(groovyBase + "/", "BuildNode.groovy").instancia(buildInfo)
      }
      return this
 }
 
 def build(){
-    _build.build()     
+    buildRef.build()     
 }
 
 def dynamicLoad(groovyBase, scriptName){
