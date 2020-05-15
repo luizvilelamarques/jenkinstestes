@@ -23,10 +23,10 @@ def instancia(contentJson, branch, _groovyBase){
      codeDocker    = load 'DockerBuild.groovy'
      codeDeployOkd = load 'DeployOKD.groovy'
 
-	
-	sh "echo conteudo: ${content.build}"	
+	sh "echo conteudo: ${content.git}"
+	sh "echo conteudo: ${content.build}"
 
-     gitScm     = codeGit.instancia(content.git, "develop")
+     gitScm     = codeGit.instancia(content.git, branch)
      buildObj   = codeBuild.instancia(content.build, _groovyBase)
      testObj    = codeTest.instancia(content.build, _groovyBase)
      sonar      = codeSonar.instancia(content.build, content.codeAnalise.sonar)
