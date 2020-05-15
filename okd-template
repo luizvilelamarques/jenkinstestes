@@ -1,0 +1,199 @@
+{
+    "apiVersion": "apps.openshift.io/v1",
+    "kind": "Template",
+    "labels": {
+        "template": "openshift-test-template"
+    },
+    "message": "o projeto ${APP_NAME} será criado",
+    "metadata": {
+        "annotations": {
+            "description": "TEMPLATE TEST",
+        },
+        "name": "openshift-test-template"
+    },
+    "objects": [
+        {
+            "apiVersion": "v1",
+            "kind": "Service",
+            "metadata": {
+                "name": "${APP_NAME}",
+				"namespace": "${APP_NAME}",
+				"resourceVersion": "${RESOURCE_VERSION}"
+            },
+            "spec": {
+                "ports": [
+                    {
+                        "name": "${APP_PORT}-tcp",
+                        "port": ${APP_PORT},
+                        "protocol": "TCP",
+                        "targetPort": ${APP_PORT_TARGET}
+                    },
+					{
+                        "name": "4000-tcp",
+                        "port": 4000,
+                        "protocol": "TCP",
+                        "targetPort": 4000
+                    }
+                ],
+                "selector": {
+                    "deploymentconfig": "${APP_NAME}"
+                },
+                "sessionAffinity": "None",
+                "type": "ClusterIP"
+            }
+        },
+		{
+            "apiVersion": "apps.openshift.io/v1",
+            "kind": "Route",
+            "metadata": {
+                "name": "${APP_NAME}${APP_URL}",
+				"namespace": "${APP_NAME}"
+            },
+            "spec": {
+				"host": "${APP_NAME}-${APP_URL}",
+				"path": "/${APP_NAME}",
+                "port": {
+					"targetPort": "${APP_PORT}-tcp"
+				},
+                "tls": {
+                    "insecureEdgeTerminationPolicy": "Allow",
+					"termination": "edge"
+                },
+				"to": {
+                    "kind": "Service",
+					"name": "${APP_NAME}",
+					"weight": 100
+                },
+                "wildcardPolicy": "true",
+                "type": "ClusterIP"
+            },
+			"status":{
+				"ingress":[
+					{
+						"conditions": [
+							{
+								"lastTransitionTime": "2020-04-17T16:08:53Z",
+								"status": "true",
+								"type": "Admitted"
+							}
+						],
+						"host": "${APP_NAME}-${APP_URL}",
+						"routerName": "router",
+						"wildcardPolicy": "None"
+					}
+				]
+			}
+        },
+        {
+            "apiVersion": "apps.openshift.io/v1",
+            "kind": "DeploymentConfig",
+            "metadata": {
+                "name": "${APP_NAME}",
+				"namespace": "${APP_NAME}"
+            },
+            "spec": {
+                "replicas": ${REPLICAS},
+                "selector": {
+                    "name": "${APP_NAME}",
+					"deploymentconfig": "${APP_NAME}"
+                },
+                "strategy": {
+					"activeDeadlineSeconds": 21600,
+					"resources": {},
+					"rollingParams": {
+						"intervalSeconds": 1,
+						"maxSurge": 25%,
+						"maxUnavailable": 25%,
+						"timeoutSeconds": 600,
+						"updatePeriodSeconds": 1
+					},
+                    "type": "Rolling"
+                },
+                "template": {
+                    "metadata": {
+                        "labels": {
+                            "name": "${APP_NAME}",
+							"deploymentconfig": "${APP_NAME}"
+                        }
+                    },
+                    "spec": {
+                        "containers": [
+                            {
+                                "env": [
+                                    {
+                                        "name": "PROFILE",
+                                        "value": "hml"
+                                    },
+									{
+                                        "name": "JAVA_OPTS",
+                                        "value": "-javaagent:/opt/glowroot/glowroot.jar -Xmx1g"
+                                    }
+                                ],
+                                "image": "${IMAGE}",
+                                "imagePullPolicy": "Always",
+                                "name": "${APP_NAME}",
+                                "ports": [
+                                    {
+                                        "containerPort": ${APP_PORT},
+                                        "protocol": "TCP"
+                                    },
+									{
+                                        "containerPort": 4000,
+                                        "protocol": "TCP"
+                                    }
+                                ],
+                                "resources": {},
+                                "terminationMessagePath": "/dev/termination-log",
+								"terminationMessagePolicy": "File",
+                                "volumeMounts": [
+                                    {
+                                        "mountPath": "/opt/glowroot",
+                                        "name": "glowroot-agent-repo"
+                                    }
+                                ]
+                            }
+                        ],
+                        "dnsPolicy": "ClusterFirst",
+                        "initContainers": [
+                            {
+                                "command": [
+									{
+										"cp",
+										"'-ra'",
+										"/opt/glowroot/.",
+										"/opt/temp"
+									}
+								],	
+                                "image": "registry.intra.tjmg.gov.br/infraestrutura/glowroot-agent:0.13.6",
+								"imagePullPolicy": "Always",
+								"name": "glowroot-agent-attach",
+								"resources": {},
+								"terminationMessagePath": "/dev/termination-log",
+								"terminationMessagePolicy": "File",
+                                "volumeMounts": [
+                                    {
+                                        "mountPath": "/opt/temp",
+                                        "name": "glowroot-agent-repo"
+                                    }
+                                ]
+                            }
+                        ],
+						"restartPolicy": "Always",
+						"schedulerName": "default-scheduler",
+						"securityContext": {},
+						"terminationGracePeriodSeconds": 30,
+						"volume": [
+							{
+								"emptyDir": {},
+								"name": "glowroot-agent-repo"
+							}
+                        ]
+                    }
+                },
+                "triggers": [ ]
+            },
+            "status": {}
+        }
+    ],
+    "parameters": [ ]
+}
