@@ -9,7 +9,7 @@ def deployOkd
 
 def instancia(branch){
      _groovyBase   = 'https://raw.githubusercontent.com/luizvilelamarques/jenkinstestes/master/'
-     deleteDir()
+
      sh "wget ${_groovyBase}/ParseJson"
      sh "wget ${_groovyBase}/Build"
      sh "wget ${_groovyBase}/Git"
