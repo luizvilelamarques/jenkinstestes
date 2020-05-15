@@ -7,15 +7,17 @@ def dockerBranch
 def dockerLatest
 def deployOkd
 
-def instancia(contentJson, branch, _groovyBase){
+def instancia(branch, _groovyBase){
 
+     sh "wget ${_groovyBase}/ParseJson.groovy"	
      sh "wget ${_groovyBase}/Build.groovy"
      sh "wget ${_groovyBase}/Git.groovy"
      sh "wget ${_groovyBase}/Test.groovy"
      sh "wget ${_groovyBase}/Sonar.groovy"
      sh "wget ${_groovyBase}/DockerBuild.groovy"
      sh "wget ${_groovyBase}/DeployOKD.groovy"
-                    
+            
+     codeParseJson = load 'ParseJson.groovy'
      codeGit       = load 'Git.groovy'
      codeBuild     = load 'Build.groovy'
      codeTest      = load 'Test.groovy'
@@ -23,8 +25,8 @@ def instancia(contentJson, branch, _groovyBase){
      codeDocker    = load 'DockerBuild.groovy'
      codeDeployOkd = load 'DeployOKD.groovy'
 
-	sh "echo conteudo: ${content.git}"
-	sh "echo conteudo: ${content.build}"
+     parseJson  = codeParseJson.instancia("https://raw.githubusercontent.com/luizvilelamarques/jenkinstestes/master/JenkinsConfig.json")
+     content    = parseJson.parse()
 
      gitScm     = codeGit.instancia(content.git, branch)
      buildObj   = codeBuild.instancia(content.build, _groovyBase)
