@@ -1,20 +1,17 @@
-def pacote
-def isMaven
-def isNode
+def test
 
-def instancia(buildInfo){
-     isMaven= buildInfo.tipoProjetoMaven
-     isNode = buildInfo.tipoProjetoNode
-     pacote = buildInfo.package
+def instancia(buildInfo, groovyBase){
+     if (buildInfo.tipoProjeto == 'maven'){
+         test = factory(groovyBase, 'TestMaven.groovy').instancia(buildInfo)
+     }else if (buildInfo.tipoProjeto == 'node'){ 
+         test = factory(groovyBase, 'TestNode.groovy').instancia(buildInfo)
+     }
      return this
 }
 
-def test(){
-     if (isMaven){
-          sh " echo test maven"
-     }else if (isNode){ 
-          sh " echo test nodejs"
-     }
+def factory(groovyBase, scriptName){
+     sh "wget ${_groovyBase}/${scriptName}"
+     return load "${scriptName}"
 }
 
 return this
