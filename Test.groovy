@@ -10,7 +10,7 @@ def instancia(buildInfo, groovyBase){
 }
 
 def dynamicLoad(groovyBase, scriptName){
-     sh "wget ${_groovyBase}/${scriptName}"
+     sh "wget ${_groovyBase}" + "/" + ${scriptName}"
      return load scriptName
 }
 
