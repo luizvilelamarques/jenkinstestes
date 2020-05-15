@@ -27,6 +27,8 @@ def instancia(branch, _groovyBase){
                     
      parseJson  = codeParseJson.instancia("https://raw.githubusercontent.com/luizvilelamarques/jenkinstestes/master/JenkinsConfig.json")
      content = parseJson.parse()
+	
+	sh "echo conteudo: ${content}"	
 
      gitScm     = codeGit.instancia(content.git, "develop")
      buildObj   = codeBuild.instancia(content.build, _groovyBase)
