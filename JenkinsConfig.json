@@ -1,6 +1,6 @@
 {
 	"build": {
-		"tipoProjeto " : "maven",
+		"tipoProjeto": "maven",
 		"package": "Implementacao/App/pom.xml",
 		"dockerImage": "medida-protetiva/medida-protetiva-srv"
 	},
