@@ -1,9 +1,9 @@
 def buildRef
 
 def instancia(buildInfo, groovyBase){
-     if (buildInfo.tipoProjeto == 'maven'){
+     if ("maven" == buildInfo.tipoProjeto){
          buildRef = dynamicLoad(groovyBase + "/", "BuildMaven.groovy").instancia(buildInfo)
-     }else if (buildInfo.tipoProjeto == 'node'){ 
+     }else if ("node" == buildInfo.tipoProjeto){ 
          buildRef = dynamicLoad(groovyBase + "/", "BuildNode.groovy").instancia(buildInfo)
      }
      return this
