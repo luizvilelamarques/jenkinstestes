@@ -2,23 +2,16 @@ def build
 
 def instancia(buildInfo, groovyBase){
      if (buildInfo.tipoProjeto == 'maven'){
-         sh "wget ${_groovyBase}/BuildMaven.groovy"
-         codeBuildMaven = load 'BuildMaven.groovy'
-         build          = codeBuildMaven.instancia(buildInfo)
+         build = factory('BuildMaven.groovy').instancia(buildInfo)
      }else if (buildInfo.tipoProjeto == 'node'){ 
-          sh "wget ${_groovyBase}/BuildNode.groovy"
-          codeBuildNode = load 'BuildNode.groovy'
-          build          = codeBuildNode.instancia(buildInfo)
+          build = factory('BuildNode.groovy').instancia(buildInfo)
      }
      return this
 }
 
-def build(){
-     if (isMaven){
-         sh " mvn clean install -f ${pacote}"
-     }else if (isNode){ 
-          sh " npm run build -f ${pacote}"
-     }
+def factory(scriptName){
+     sh "wget ${_groovyBase}/${scriptName}"
+     return load "${scriptName}"
 }
 
 return this
