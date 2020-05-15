@@ -11,10 +11,15 @@ def instancia(buildInfo, sonarInfo){
 
 def analise(){
     scannerHome = tool 'Sonar TJMG'
-    POM_VERSION = sh script: "mvn -f ${pom} help:evaluate -Dexpression=project.version -q -DforceStdout", returnStdout: true
+    
+    def pom_version
+    def mvn_version = 'Maven 3.6.3'
+    withEnv( ["PATH+MAVEN=${tool mvn_version}/bin"] ) {
+        pom_version = sh script: "mvn -f ${pom} help:evaluate -Dexpression=project.version -q -DforceStdout", returnStdout: true
+    }
 
     withSonarQubeEnv('SonarQube TJMG'){ 
-        sh "${scannerHome}/bin/sonar-scanner -e -Dsonar.projectKey=${projectKey} -Dsonar.projectVersion=${POM_VERSION} -Dsonar.java.source=1.8 -Dsonar.sources=${sources} -Dsonar.java.binaries=**/target -Dsonar.sourceEncoding=ISO-8859-1"
+        sh "${scannerHome}/bin/sonar-scanner -e -Dsonar.projectKey=${projectKey} -Dsonar.projectVersion=${pom_version} -Dsonar.java.source=1.8 -Dsonar.sources=${sources} -Dsonar.java.binaries=**/target -Dsonar.sourceEncoding=ISO-8859-1"
     }
 }
 
