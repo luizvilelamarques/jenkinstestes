@@ -10,17 +10,17 @@ def deployOkd
 def instancia(branch, _groovyBase){
 
      sh "wget ${_groovyBase}/ParseJson"
-     sh "wget ${_groovyBase}/Build"
+     sh "wget ${_groovyBase}/Build.groovy"
      sh "wget ${_groovyBase}/Git"
-     sh "wget ${_groovyBase}/Test"
+     sh "wget ${_groovyBase}/Test.groovy"
      sh "wget ${_groovyBase}/Sonar"
      sh "wget ${_groovyBase}/DockerBuild"
      sh "wget ${_groovyBase}/DeployOkd"
                     
      codeParseJson = load 'ParseJson'
      codeGit       = load 'Git'
-     codeBuild     = load 'Build'
-     codeTest      = load 'Test'
+     codeBuild     = load 'Build.groovy'
+     codeTest      = load 'Test.groovy'
      codeSonar     = load 'Sonar'
      codeDocker    = load 'DockerBuild'
      codeDeployOkd = load 'DeployOkd'
