@@ -5,7 +5,7 @@ def testObj
 def sonar
 def dockerBranch
 def dockerLatest
-def deployOkd
+def deployObj
 
 def instancia(branch, _groovyBase){
 
@@ -23,7 +23,7 @@ def instancia(branch, _groovyBase){
      codeTest      = load 'Test.groovy'
      codeSonar     = load 'Sonar.groovy'
      codeDocker    = load 'DockerBuild.groovy'
-     codeDeployOkd = load 'DeployOKD.groovy'
+     codeDeploy    = load 'Deploy.groovy'
 
      parseJson  = codeParseJson.instancia("https://raw.githubusercontent.com/luizvilelamarques/jenkinstestes/master/JenkinsConfig.json")
      content    = parseJson.parse()
@@ -45,7 +45,7 @@ def instancia(branch, _groovyBase){
 	            true, 
 	            null)
 
-     deployOkd    = codeDeployOkd.instancia(content.okd)
+     deployObj    = codeDeploy.instancia(content.deploy, _groovyBase)
      
      return this
 }
