@@ -1,4 +1,4 @@
-def server   = "tcp://lindocker-2.intra.tjmg.gov.br:2375
+def server   = "tcp://lindocker-2.intra.tjmg.gov.br:2375"
 def registry = "https://registry.intra.tjmg.gov.br"
 def secret   = "codap-registry"
 def app
