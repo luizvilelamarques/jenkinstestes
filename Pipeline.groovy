@@ -30,7 +30,7 @@ def instancia(branch, _groovyBase){
 
      gitScm     = codeGit.instancia(content.git, "develop")
      buildObj   = codeBuild.instancia(content.build, _groovyBase)
-     testObj    = codeTest.instancia(content.build)
+     testObj    = codeTest.instancia(content.build, _groovyBase)
      sonar      = codeSonar.instancia(content.build, content.codeAnalise.sonar)
 
      dockerBranch = codeDocker.instancia(
