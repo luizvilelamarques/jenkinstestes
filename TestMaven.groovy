@@ -5,7 +5,7 @@ def instancia(buildInfo){
      return this
 }
 
-def build(){
+def test(){
     sh " echo teste maven"
 }
 
