@@ -20,23 +20,27 @@ def deploy() {
 }
 
 def _apply() {
-    openshift.withCluster(clusterName) {
-         openshift.withProject(serviceName) {
-            def templateSelector = openshift.selector( "template", "openshift-test-template")
-            if (!templateSelector.exists()) {
-                openshift.create(readFile('template-openshift.json'))
-            } else {
-                openshift.apply(readFile('template-openshift.json'))
-            }
-         }
+    withEnv(["PATH+OC=${tool 'oc_client'}"]) {
+        openshift.withCluster(clusterName) {
+             openshift.withProject(serviceName) {
+                def templateSelector = openshift.selector( "template", "openshift-test-template")
+                if (!templateSelector.exists()) {
+                    openshift.create(readFile('template-openshift.json'))
+                } else {
+                    openshift.apply(readFile('template-openshift.json'))
+                }
+             }
+        }
     }
 }
 
 def _rolout() {
-    openshift.withCluster(clusterName) {
-         openshift.withProject(serviceName) {
-            openshift.selector("dc", deploymentConfig).rollout().latest()    
-         }
+    withEnv(["PATH+OC=${tool 'oc_client'}"]) {
+        openshift.withCluster(clusterName) {
+             openshift.withProject(serviceName) {
+                openshift.selector("dc", deploymentConfig).rollout().latest()    
+             }
+        }
     }
 }
 
