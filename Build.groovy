@@ -16,6 +16,8 @@ def build(){
 def dynamicLoad(groovyBase, scriptName){
      sh "wget ${groovyBase}${scriptName}"
      code = load "${scriptName}"
+     println "${scriptName}"
+     sh "echo ${scriptName}"
      return code
 }
 
