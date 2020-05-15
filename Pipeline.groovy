@@ -15,7 +15,7 @@ def instancia(branch, _groovyBase){
      sh "wget ${_groovyBase}/Test.groovy"
      sh "wget ${_groovyBase}/Sonar.groovy"
      sh "wget ${_groovyBase}/DockerBuild.groovy"
-     sh "wget ${_groovyBase}/DeployOKD.groovy"
+     sh "wget ${_groovyBase}/Deploy.groovy"
             
      codeParseJson = load 'ParseJson.groovy'
      codeGit       = load 'Git.groovy'
