@@ -1,6 +1,6 @@
-def server   = "tcp://lindocker-2.intra.tjmg.gov.br:2375"
-def registry = "https://registry.intra.tjmg.gov.br"
-def secret   = "codap-registry"
+def server
+def registry
+def secret
 def app
 def image
 def isLatest
@@ -31,6 +31,9 @@ def instancia(dockerInfo, img, latest, branch){
    image = img
    isLatest = latest
    branch = branch
+   server   = "tcp://lindocker-2.intra.tjmg.gov.br:2375"
+   registry = "https://registry.intra.tjmg.gov.br"
+   secret   = "codap-registry"
    return this			
 }
 
