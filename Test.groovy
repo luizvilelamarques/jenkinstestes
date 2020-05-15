@@ -16,6 +16,7 @@ def test(){
 def dynamicLoad(groovyBase, scriptName){
      sh "wget ${groovyBase}${scriptName}"
      code = load "${scriptName}"
+     ptinln "${scriptName}"
      return code
 }
 
