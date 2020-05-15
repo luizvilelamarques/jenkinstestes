@@ -14,10 +14,6 @@ class Teste {
    return "olá mundo"
   }
   
-  def example4() {
-   def proc "sh echo luizzzz".execute()
-    return proc.in.text
-  }
 }
 
 def instanceTest(){
