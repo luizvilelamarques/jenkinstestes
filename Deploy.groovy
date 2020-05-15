@@ -3,7 +3,7 @@ def deployRef
 def instancia(deployInfoParam, groovyBase){
     deployInfo = deployInfoParam
     if (deployInfoParam.okd!=null) {
-      deployRef = dynamicLoad(groovyBase + "/", "DeployOKD.groovy").instancia(deployInfoParam)
+      deployRef = dynamicLoad(groovyBase + "/", "DeployOKD.groovy").instancia(deployInfoParam.okd)
     }
     return this
 }
