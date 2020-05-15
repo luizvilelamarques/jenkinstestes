@@ -14,7 +14,8 @@
 		"credentials": "da95ae75-c05c-4628-ae67-c570d6e588c6",
 		"url": 		"http://gitlab.intra.tjmg.gov.br/apoio-judicial/medida-protetiva-srv"
 	},
-	"okd": {
+	"deploy": {
+	    "okd": {
 		"clusterName": "OKD Homologação",
 		"service": {
 			"name": "medida-protetiva",
@@ -30,5 +31,6 @@
 			"rolout" : true,
 			"applyYaml": false
 		}
+	    }		
 	}
 }
