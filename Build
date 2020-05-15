@@ -1,11 +1,15 @@
-def pacote
-def isMaven
-def isNode
+def build
 
-def instancia(buildInfo){
-     isMaven= buildInfo.tipoProjetoMaven
-     isNode = buildInfo.tipoProjetoNode
-     pacote = buildInfo.package
+def instancia(buildInfo, groovyBase){
+     if (buildInfo.tipoProjeto == 'maven'){
+         sh "wget ${_groovyBase}/BuildMaven.groovy"
+         codeBuildMaven = load 'BuildMaven.groovy'
+         build          = codeBuildMaven.instancia(buildInfo)
+     }else if (buildInfo.tipoProjeto == 'node'){ 
+          sh "wget ${_groovyBase}/BuildNode.groovy"
+          codeBuildNode = load 'BuildNode.groovy'
+          build          = codeBuildNode.instancia(buildInfo)
+     }
      return this
 }
 
